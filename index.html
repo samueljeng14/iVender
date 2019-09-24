@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>iVender 數據資料庫</title>
+	<link rel="icon" href="save-money.png" type="png">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+	<div id="app1">
+		<div class="numberCountFix">{{count}}</div>
+
+		<section id="basicInfo">
+			<div class="container">
+				<span class="inputListTitle">性別</span>
+				<template>
+					<el-select v-model="inputForm.sex" multiple clearable placeholder="請選擇用戶性別">
+						<el-option v-for="item in select.sex" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">年齡</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.age.value" range :step="1" :max="100" :marks="inputForm.age.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">職業類別</span>
+				<template>
+					<el-select v-model="inputForm.jobType" multiple clearable placeholder="請選擇用戶職業">
+						<el-option v-for="item in select.jobType" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+		</section>
+
+		<section id="trans">
+			<div class="container">
+				<span class="inputListTitle">最常使用交通工具</span>
+				<template>
+					<el-select v-model="inputForm.mostVehicle" multiple clearable placeholder="請選擇交通工具">
+						<el-option v-for="item in select.mostVehicle" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+
+
+			<div class="container">
+				<span class="inputListTitle">平均徒步交通時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgWalkTime.value" range show-stops :step="30" :max="120"
+							:marks="inputForm.avgWalkTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">平均機車交通時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgMotoTime.value" range show-stops :step="30" :max="120"
+							:marks="inputForm.avgMotoTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">平均公車交通時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgBusTime.value" range show-stops :step="30" :max="120"
+							:marks="inputForm.avgBusTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">平均捷運交通時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgMetroTime.value" range show-stops :step="30" :max="120"
+							:marks="inputForm.avgMetroTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">平均汽車交通時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgCarTime.value" range show-stops :step="30" :max="120"
+							:marks="inputForm.avgCarTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">最常活動區域</span>
+				<div class="block">
+					<el-cascader v-model="inputForm.mostActPlace" :options="select.options" :props="select.props" clearable
+						filterable placeholder="選擇或搜尋行政區"></el-cascader>
+				</div>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">Google Map 資料更新</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.googleMapUpdate.value" :step="1" :min="1" :max="8"
+							:marks="inputForm.googleMapUpdate.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+		</section>
+
+		<section id="money">
+			<div class="container">
+				<span class="inputListTitle">使用現金消費頻率</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.useCash.value" range show-stops :step="5" :max="50"
+							:marks="inputForm.useCash.marks"></el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">使用信用卡消費頻率</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.useCreditCard.value" range show-stops :step="5" :max="50"
+							:marks="inputForm.useCreditCard.marks"></el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">使用悠遊卡消費頻率</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.useEasyCard.value" range show-stops :step="5" :max="50"
+							:marks="inputForm.useEasyCard.marks"></el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">使用行動支付消費頻率</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.useMobilePay.value" range show-stops :step="5" :max="50"
+							:marks="inputForm.useMobilePay.marks"></el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">最常使用支付方法</span>
+				<template>
+					<el-select v-model="inputForm.mostPayWay" multiple clearable placeholder="請選擇支付方式">
+						<el-option v-for="item in select.mostPayWay" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">平均每月總消費金額</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgMonthCost.value" range :step="1000" :max="200000"
+							:marks="inputForm.avgMonthCost.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">最常消費通路</span>
+				<template>
+					<el-select v-model="inputForm.mostBuyPlace" multiple clearable placeholder="請選擇消費通路">
+						<el-option v-for="item in select.mostBuyPlace" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+
+			<div class="container">
+				<span class="inputListTitle">載具資料更新時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.invoiceVehicleUpdate.value" :step="1" :min="1" :max="8"
+							:marks="inputForm.invoiceVehicleUpdate.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+		</section>
+
+		<section id="dayTime">
+			<div class="container">
+				<span class="inputListTitle">平均起床時間</span>
+				<template>
+					<el-select v-model="inputForm.avgGetupTime" multiple clearable placeholder="請選擇起床時間">
+						<el-option v-for="item in select.avgGetupTime" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">平均睡覺時間</span>
+				<template>
+					<el-select v-model="inputForm.avgSleepTime" multiple clearable placeholder="請選擇睡覺時間">
+						<el-option v-for="item in select.avgSleepTime" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">平均出門時間</span>
+				<template>
+					<el-select v-model="inputForm.avgOutTime" multiple clearable placeholder="請選擇出門時間">
+						<el-option v-for="item in select.avgOutTime" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">平均回家時間</span>
+				<template>
+					<el-select v-model="inputForm.avgHomeTime" multiple clearable placeholder="請選擇回家時間">
+						<el-option v-for="item in select.avgHomeTime" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">平均在家時長</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgHomeDuration.value" range :step="1" :max="24"
+							:marks="inputForm.avgHomeDuration.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">平均出門時長</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.avgOutDuration.value" range :step="1" :max="24"
+							:marks="inputForm.avgOutDuration.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">作息資料更新時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.lifeUpdate.value" :step="1" :min="1" :max="8"
+							:marks="inputForm.lifeUpdate.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+		</section>
+
+		<section id="appUse">
+			<div class="container">
+				<span class="inputListTitle">最常使用應用程式類型</span>
+				<template>
+					<el-select v-model="inputForm.mostUseApp" multiple clearable placeholder="請選擇應用程式類型">
+						<el-option v-for="item in select.mostUseApp" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">運動類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.sportAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.sportAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">健康類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.healthAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.healthAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">購物類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.shoppingAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.shoppingAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">娛樂類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.entertainmentAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.entertainmentAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">教育類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.educationAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.educationAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">攝影類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.photoAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.photoAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">旅行類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.travelAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.travelAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">社交類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.socialAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.socialAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+			<div class="container">
+				<span class="inputListTitle">金融類APP使用時間</span>
+				<template>
+					<div class="block">
+						<el-slider v-model="inputForm.finaceAppUseTime.value" range :step="1" :max="12"
+							:marks="inputForm.finaceAppUseTime.marks">
+						</el-slider>
+					</div>
+				</template>
+			</div>
+		</section>
+
+		<!--  ========== TABLE部分 ==========  -->
+
+
+		<template>
+			<el-table v-show="showTable" v-loading="tableLoading"
+				:data="filtered.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 1024px; margin: auto;">
+				<el-table-column type="expand">
+					<template slot-scope="props">
+						<el-form label-position="left" inline class="demo-table-expand">
+							<el-form-item label="最常使用交通工具">
+								<span>{{ props.row.mostVehicle }}</span>
+							</el-form-item>
+							<el-form-item label="最常活動區域">
+								<span>{{ props.row.mostActPlace[0] }} / {{ props.row.mostActPlace[1] }}</span>
+							</el-form-item>
+							<el-form-item label="最常使用支付方法">
+								<span>{{ props.row.mostPayWay }}</span>
+							</el-form-item>
+							<el-form-item label="最常消費通路">
+								<span>{{ props.row.mostBuyPlace }}</span>
+							</el-form-item>
+							<el-form-item label="平均在家時長">
+								<span>{{ props.row.avgHomeDuration }} 小時</span>
+							</el-form-item>
+							<el-form-item label="平均出門時長">
+								<span>{{ props.row.avgOutDuration }} 小時</span>
+							</el-form-item>
+							<el-form-item label="最常使用應用程式類型">
+								<span>{{ props.row.mostUseApp }}</span>
+							</el-form-item>
+						</el-form>
+					</template>
+				</el-table-column>
+				<el-table-column label="性別" prop="sex">
+				</el-table-column>
+				<el-table-column label="年齡" prop="age">
+				</el-table-column>
+				<el-table-column label="職業類別" prop="jobType">
+				</el-table-column>
+				<el-table-column label="平均消費能力" prop="avgMonthCost">
+				</el-table-column>
+			</el-table>
+		</template>
+
+		<div class="block">
+			<el-pagination background align="center" @size-change="handleSizeChange" @current-change="handleCurrentChange"
+				:current-page="currentPage" :page-size="10" layout="prev, pager, next" :total="total"></el-pagination>
+		</div>
+
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="index.js" type="module"></script>
+</body>
+
+</html>
