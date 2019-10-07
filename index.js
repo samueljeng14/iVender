@@ -90,6 +90,7 @@ var vm = new Vue({
 				this.range(tableData, "avgHomeDuration") &&
 				this.range(tableData, "avgOutDuration") &&
 				this.slider(tableData, "lifeUpdate") &&
+				this.multipleSelect(tableData, "mostUseApp") &&
 				this.rangeAppTime(tableData, "sportAppUseTime") &&
 				this.rangeAppTime(tableData, "healthAppUseTime") &&
 				this.rangeAppTime(tableData, "shoppingAppUseTime") &&
